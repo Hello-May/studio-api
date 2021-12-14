@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,7 +18,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
 Route::get('/hello', function () {
     return 'hello-world';
+});
+
+Route::get('/welcome', [WelcomeController::class, 'index'])->name('welcome.index');
+
+Route::group(['as' => 'test::', 'prefix' => 'test'], function () {
+    Route::get('{id?}', ['as' => 'id', function ($id = 'default') {
+        return $id;
+    }])->where(['id' => '[0-9]+']);
+    // test::id
+
+    Route::get('{name?}', ['as' => 'name', function ($name = 'noname') {
+        return $name;
+    }])->where(['name' => '[A-Za-z]+']);
+    // test::name
 });
