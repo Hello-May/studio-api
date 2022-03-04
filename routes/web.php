@@ -18,6 +18,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::view('/view', 'welcome', ['user' => 'May']);
+
 Route::get('/hello', function () {
     return 'hello-world';
 });
@@ -34,4 +36,15 @@ Route::group(['as' => 'test::', 'prefix' => 'test'], function () {
         return $name;
     }])->where(['name' => '[A-Za-z]+']);
     // test::name
+});
+
+// Route::resource('task', TaskController::class);
+// Route::apiResource('task', TaskController::class);
+
+// Route::get('{anything}', function () {
+//     return 'catch-all';
+// })->where('anthing', '*');
+
+Route::fallback(function () {
+    return 'web: catch-all';
 });
